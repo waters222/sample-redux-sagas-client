@@ -1,0 +1,20 @@
+
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "ecmaFeatures": {
+    "jsx": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "rules": {
+    "semi": 2,
+    "react/display-name": [0, { "ignoreTranspilerName": false }],
+    "react/prop-types": [0]
+  }
+
+}
