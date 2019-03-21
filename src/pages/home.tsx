@@ -3,19 +3,21 @@ import { Dispatch } from 'redux';
 import { ApplicationState } from '../stores';
 import { connect } from 'react-redux';
 import { LanguageActions } from '../stores/language/actions';
-import { Icon, Layout, Menu } from 'antd';
+import { Dropdown, Icon, Layout, Menu } from 'antd';
 import './home.css';
 
 const { Header, Sider, Content } = Layout;
 
 interface Props {
     readonly language: string;
+    readonly userName: string | undefined;
     changeLanguage: (language: string) => void;
 }
 
 interface States {
     collapsed: boolean;
 }
+
 class Home extends React.Component<Props, States> {
     constructor(props: Props) {
         super(props);
@@ -48,6 +50,31 @@ class Home extends React.Component<Props, States> {
         this.setState({ collapsed: !this.state.collapsed });
     };
 
+    public langMenu = () => {
+        return (
+            <Menu className="dropdown-menu">
+                <Menu.Item>English</Menu.Item>
+                <Menu.Item>Chinese</Menu.Item>
+            </Menu>
+        );
+    };
+
+    public accountMenu = () => {
+        return (
+            <Menu className="dropdown-menu">
+                <Menu.Item>
+                    <Icon type="user" />
+                    Account Info
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item>
+                    <Icon type="logout" />
+                    Logout
+                </Menu.Item>
+            </Menu>
+        );
+    };
+
     public render() {
         return (
             <Layout className="home">
@@ -76,35 +103,54 @@ class Home extends React.Component<Props, States> {
                     </Menu>
                 </Sider>
                 <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }}>
-                        <Icon
-                            className="trigger"
-                            type={
-                                this.state.collapsed
-                                    ? 'menu-unfold'
-                                    : 'menu-fold'
-                            }
-                            onClick={this.toggle}
-                        />
-                    </Header>
-                    <Content
+                    <Header
                         style={{
-                            margin: '24px, 16px',
-                            padding: 24,
                             background: '#fff',
-                            minHeight: 280,
+                            padding: 0,
+                            width: '100%',
                         }}
                     >
-                        something something
-                    </Content>
+                        <div className="header-index">
+                            <span
+                                className="header-index-trigger"
+                                onClick={this.toggle}
+                            >
+                                <Icon
+                                    className="trigger"
+                                    type={
+                                        this.state.collapsed
+                                            ? 'menu-unfold'
+                                            : 'menu-fold'
+                                    }
+                                />
+                            </span>
+                            <div className="header-index-right">
+                                <Dropdown overlay={this.accountMenu}>
+                                    <span className="index-action">
+                                        <Icon type="user" />
+                                        <span className="name">
+                                            {this.props.userName}
+                                        </span>
+                                    </span>
+                                </Dropdown>
+                                <Dropdown overlay={this.langMenu}>
+                                    <span className="index-action lang-select-dropdown">
+                                        <Icon type="global" />
+                                    </span>
+                                </Dropdown>
+                            </div>
+                        </div>
+                    </Header>
+                    <Content className="content">something something</Content>
                 </Layout>
             </Layout>
         );
     }
 }
 
-const mapStateToProps = ({ language }: ApplicationState) => ({
+const mapStateToProps = ({ language, account }: ApplicationState) => ({
     language: language.language,
+    userName: account.name,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

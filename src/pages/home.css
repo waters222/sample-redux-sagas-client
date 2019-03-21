@@ -1,0 +1,57 @@
+.home{
+    height: 100%;
+    background: #f0f2f5;
+}
+
+.header-index{
+    height: 64px;
+    padding: 0;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,21,41,.08);
+}
+
+.header-index-trigger{
+    height: 64px;
+    padding: 22px 24px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all .3s,padding 0s;
+}
+.header-index-trigger:hover{
+    background: #f0f2f5;
+}
+
+.header-index-right{
+    float: right;
+    height: 100%;
+    overflow: hidden;
+}
+
+.header-index-right .index-action{
+    display: inline-block;
+    height: 100%;
+    padding: 0 15px;
+    cursor: pointer;
+    transition: all .3s;
+    font-size: 16px;
+}
+.header-index-right .index-action:hover{
+    background: #f0f2f5;
+}
+
+.header-index-right .lang-select-dropdown{
+    height: 64px;
+    vertical-align: top;
+}
+
+.content{
+    margin: 24px 16px;
+    background: #fff;
+    min-height: 280px;
+}
+.dropdown-menu{
+    min-width: 120px;
+}
+.dropdown-menu li{
+    font-size: 14px;
+}
