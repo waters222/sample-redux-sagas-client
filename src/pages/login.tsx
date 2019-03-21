@@ -1,16 +1,30 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
-import Button from 'antd/es/button';
+import { Button, Col, Form, Icon, Input, Row } from 'antd';
+import './login.less';
+import { ChangeEvent } from 'react';
+import { AccountActions } from '../stores/account/actions';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { AccountActions } from '../stores/account/actions';
+import { FormComponentProps } from 'antd/lib/form';
 
-interface Props {
+interface Props extends FormComponentProps {
     login: (name: string, password: string) => void;
     logout: () => void;
 }
-class Login extends React.Component<Props> {
+
+interface States {
+    userName: string;
+    password: string;
+}
+
+class Login extends React.Component<Props, States> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            userName: '',
+            password: '',
+        };
+    }
     public loginSubmit = () => {
         console.log('login submit');
         this.props.login('test', '123321');
@@ -20,27 +34,92 @@ class Login extends React.Component<Props> {
         this.props.logout();
     };
 
+    public onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => {
+        this.setState({ userName: e.target.value });
+    };
+
+    public onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+        this.setState({ password: e.target.value });
+    };
+
+    public onSubmit = () => {
+        console.log('login submitted');
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log(`login successful: ${values}`);
+            }
+        });
+    };
+
     public render() {
+        const { getFieldDecorator } = this.props.form;
         return (
             <div>
-                <p>login page</p>
-                <FormattedMessage id="app.test.message1" />
-                <br />
-                <Link to="/">to home</Link>
-                <Button
-                    type="default"
-                    htmlType="button"
-                    onClick={this.loginSubmit}
-                >
-                    <FormattedMessage id="app.login" />
-                </Button>
-                <Button
-                    type="default"
-                    htmlType="button"
-                    onClick={this.logoutSubmit}
-                >
-                    <FormattedMessage id="app.logout" />
-                </Button>
+                <Row type="flex" justify="center" align="middle">
+                    <Col span={4}>
+                        <Form className="login-form">
+                            <Form.Item>
+                                {getFieldDecorator('userName', {
+                                    rules: [
+                                        {
+                                            required: true,
+                                            message:
+                                                'Please input your username!',
+                                        },
+                                    ],
+                                })(
+                                    <Input
+                                        placeholder="admin"
+                                        prefix={
+                                            <Icon
+                                                type="user"
+                                                style={{
+                                                    color: 'rgba(0,0,0,.25)',
+                                                }}
+                                            />
+                                        }
+                                        onChange={this.onChangeUserName}
+                                    />
+                                )}
+                            </Form.Item>
+                            <Form.Item>
+                                {getFieldDecorator('password', {
+                                    rules: [
+                                        {
+                                            required: true,
+                                            message:
+                                                'Please input your Password!',
+                                        },
+                                    ],
+                                })(
+                                    <Input
+                                        placeholder="admin"
+                                        type="password"
+                                        prefix={
+                                            <Icon
+                                                type="lock"
+                                                style={{
+                                                    color: 'rgba(0,0,0,.25)',
+                                                }}
+                                            />
+                                        }
+                                        onChange={this.onChangePassword}
+                                    />
+                                )}
+                            </Form.Item>
+                            <Form.Item>
+                                <Button
+                                    htmlType="submit"
+                                    type="primary"
+                                    onClick={this.onSubmit}
+                                    className="login-form-button"
+                                >
+                                    submit
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </Col>
+                </Row>
             </div>
         );
     }
@@ -51,7 +130,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         dispatch(AccountActions.login(name, password)),
     logout: () => dispatch(AccountActions.logout()),
 });
+
+const WrappedLoginForm = Form.create({ name: 'login_form' })(Login);
+
 export default connect(
     null,
     mapDispatchToProps
-)(Login);
+)(WrappedLoginForm);

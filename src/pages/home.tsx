@@ -5,12 +5,17 @@ import { connect } from 'react-redux';
 import { LanguageActions } from '../stores/language/actions';
 import { Dropdown, Icon, Layout, Menu } from 'antd';
 import './home.less';
+import { Redirect, Route, Switch } from 'react-router';
+import Account from './account';
+import { NotFound } from './not-fount';
+import { isLogin } from '../stores/account/selectors';
 
 const { Header, Sider, Content } = Layout;
 
 interface Props {
     readonly language: string;
     readonly userName: string | undefined;
+    readonly bIsLogin: boolean;
     changeLanguage: (language: string) => void;
 }
 
@@ -39,11 +44,7 @@ class Home extends React.Component<Props, States> {
         nextState: States,
         nextContext: any
     ): boolean {
-        if (this.props.language !== nextProps.language) {
-            return false;
-        }
-        console.log('home should change lan');
-        return true;
+        return this.props.language === nextProps.language;
     }
 
     public toggle = () => {
@@ -76,6 +77,9 @@ class Home extends React.Component<Props, States> {
     };
 
     public render() {
+        if (!this.props.bIsLogin) {
+            return <Redirect to="/login" />;
+        }
         return (
             <Layout className="home">
                 <Sider
@@ -141,7 +145,12 @@ class Home extends React.Component<Props, States> {
                             </div>
                         </div>
                     </Header>
-                    <Content className="content">something something</Content>
+                    <Content className="content">
+                        <Switch>
+                            <Route path="/account" component={Account} />
+                            <Route component={NotFound} />
+                        </Switch>
+                    </Content>
                 </Layout>
             </Layout>
         );
@@ -151,6 +160,7 @@ class Home extends React.Component<Props, States> {
 const mapStateToProps = ({ language, account }: ApplicationState) => ({
     language: language.language,
     userName: account.name,
+    bIsLogin: isLogin(account),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
