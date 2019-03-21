@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Col, Form, Icon, Input, Row } from 'antd';
+import { Button, Form, Icon, Input, Layout } from 'antd';
 import './login.less';
 import { ChangeEvent } from 'react';
 import { AccountActions } from '../stores/account/actions';
@@ -54,73 +54,67 @@ class Login extends React.Component<Props, States> {
     public render() {
         const { getFieldDecorator } = this.props.form;
         return (
-            <div>
-                <Row type="flex" justify="center" align="middle">
-                    <Col span={4}>
-                        <Form className="login-form">
-                            <Form.Item>
-                                {getFieldDecorator('userName', {
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message:
-                                                'Please input your username!',
-                                        },
-                                    ],
-                                })(
-                                    <Input
-                                        placeholder="admin"
-                                        prefix={
-                                            <Icon
-                                                type="user"
-                                                style={{
-                                                    color: 'rgba(0,0,0,.25)',
-                                                }}
-                                            />
-                                        }
-                                        onChange={this.onChangeUserName}
+            <Layout className="layout-top-layer">
+                <Form className="login-form">
+                    <Form.Item>
+                        {getFieldDecorator('userName', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: 'Please input your username!',
+                                },
+                            ],
+                        })(
+                            <Input
+                                placeholder="admin"
+                                prefix={
+                                    <Icon
+                                        type="user"
+                                        style={{
+                                            color: 'rgba(0,0,0,.25)',
+                                        }}
                                     />
-                                )}
-                            </Form.Item>
-                            <Form.Item>
-                                {getFieldDecorator('password', {
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message:
-                                                'Please input your Password!',
-                                        },
-                                    ],
-                                })(
-                                    <Input
-                                        placeholder="admin"
-                                        type="password"
-                                        prefix={
-                                            <Icon
-                                                type="lock"
-                                                style={{
-                                                    color: 'rgba(0,0,0,.25)',
-                                                }}
-                                            />
-                                        }
-                                        onChange={this.onChangePassword}
+                                }
+                                onChange={this.onChangeUserName}
+                            />
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        {getFieldDecorator('password', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: 'Please input your Password!',
+                                },
+                            ],
+                        })(
+                            <Input
+                                placeholder="admin"
+                                type="password"
+                                prefix={
+                                    <Icon
+                                        type="lock"
+                                        style={{
+                                            color: 'rgba(0,0,0,.25)',
+                                        }}
                                     />
-                                )}
-                            </Form.Item>
-                            <Form.Item>
-                                <Button
-                                    htmlType="submit"
-                                    type="primary"
-                                    onClick={this.onSubmit}
-                                    className="login-form-button"
-                                >
-                                    submit
-                                </Button>
-                            </Form.Item>
-                        </Form>
-                    </Col>
-                </Row>
-            </div>
+                                }
+                                onChange={this.onChangePassword}
+                            />
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        <Button
+                            htmlType="submit"
+                            type="primary"
+                            onClick={this.onSubmit}
+                            className="login-form-button"
+                        >
+                            submit
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Layout>
         );
     }
 }

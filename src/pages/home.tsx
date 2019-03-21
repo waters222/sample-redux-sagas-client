@@ -81,7 +81,7 @@ class Home extends React.Component<Props, States> {
             return <Redirect to="/login" />;
         }
         return (
-            <Layout className="home">
+            <Layout className="layout-top-layer">
                 <Sider
                     trigger={null}
                     collapsible={true}
