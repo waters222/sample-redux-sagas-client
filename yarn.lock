@@ -1004,6 +1004,13 @@
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.2.tgz#0e670ea254d559241b6eeb3894f8754991e73220"
   integrity sha512-ui3WwXmjTaY73fOQ3/m3nnajU/Orhi6cEu5rzX+BrAAJxa3eITXZ5ch9suPqtM03OWhAHhPSyBGCN4UKoxO20Q==
 
+"@types/immutability-helper@^2.6.3":
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/@types/immutability-helper/-/immutability-helper-2.6.3.tgz#9c864d84dabf45176904ececce439257cefdbc3c"
+  integrity sha512-WKddkNbFonQIwbplhRQuBFBVgMM7yqpfaYTlxeN6oubEU+q0TCQJx7LZvKaFXHQzP7KnPpzhCVjfYGLfBB2nzQ==
+  dependencies:
+    immutability-helper "*"
+
 "@types/jest@^23.3.10":
   version "23.3.14"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.14.tgz#37daaf78069e7948520474c87b80092ea912520a"
@@ -4997,6 +5004,13 @@ immer@1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/immer/-/immer-1.10.0.tgz#bad67605ba9c810275d91e1c2a47d4582e98286d"
   integrity sha512-O3sR1/opvCDGLEVcvrGTMtLac8GJ5IwZC4puPrLuRj3l7ICKvkmA0vGuU9OW8mV9WIBRnaxp5GJh9IEAaNOoYg==
+
+immutability-helper@*, immutability-helper@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-3.0.0.tgz#a74e989c60e2ddab85a6abeed8078981b2d13271"
+  integrity sha512-Ww7oOSnBIRb9ihT9UH9eHz0uhie0rw9bpqGYCb7qD5VpsdOLv+fx/KCRgHqvX/13LgSM5sDfsLpeSIM6kodUxQ==
+  dependencies:
+    invariant "^2.2.4"
 
 immutable@^3.7.4, immutable@^3.8.1:
   version "3.8.2"

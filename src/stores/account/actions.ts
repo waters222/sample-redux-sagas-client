@@ -7,13 +7,22 @@ export const AccountActions = {
             name: name,
             password: password,
         }),
+
+    loginSuccessful: (name: string, session: string) =>
+        createAction(AccountActionType.LOGIN_SUCCESSFUL, {
+            name: name,
+            session: session,
+        }),
+
+    loginFailed: (error: string) =>
+        createAction(AccountActionType.LOGIN_FAILED, { error: error }),
+
     logout: () => createAction(AccountActionType.LOGOUT),
 
-    changeName: (name: string) =>
-        createAction(AccountActionType.CHANGE_NAME, name),
+    logoutSuccessful: () => createAction(AccountActionType.LOGOUT_SUCCESSFUL),
 
-    changePassword: (password: string) =>
-        createAction(AccountActionType.CHANGE_PASSWORD, password),
+    logoutFailed: (error: string) =>
+        createAction(AccountActionType.LOGOUT_FAILED, { error: error }),
 };
 
 export type AccountActions = ActionUnion<typeof AccountActions>;

@@ -39,6 +39,10 @@ if (sessionCookie !== undefined) {
         sessionState = {
             name: sessionObject.name,
             session: sessionObject.session,
+            isLogin: false,
+            errorLogin: undefined,
+            isLogout: false,
+            errorLogout: undefined,
         };
     }
 }
@@ -50,7 +54,6 @@ const store = configureStore(history, {
         action: 'REPLACE',
     },
 });
-
 
 ReactDOM.render(
     <Provider store={store}>
