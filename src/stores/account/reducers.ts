@@ -4,8 +4,8 @@ import { AccountActions } from './actions';
 import update from 'immutability-helper';
 
 const initialState: AccountState = {
-    name: '',
-    session: '',
+    name: undefined,
+    session: undefined,
     isLogin: false,
     errorLogin: undefined,
     isLogout: false,

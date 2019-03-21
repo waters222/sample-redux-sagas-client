@@ -7,5 +7,6 @@ export const getName = (state: AccountState) => state.name;
 
 export const isLogin: Selector<AccountState, boolean> = createSelector(
     getSession,
-    session => session !== undefined && session.length > 0
+    getName,
+    (session, name) => session !== undefined && name !== undefined
 );
