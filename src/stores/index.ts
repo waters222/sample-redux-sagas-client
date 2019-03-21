@@ -1,4 +1,3 @@
-
 import { combineReducers } from 'redux';
 import { lanReducer } from './language/reducers';
 import { connectRouter, RouterState } from 'connected-react-router';

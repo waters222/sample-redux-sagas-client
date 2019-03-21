@@ -4,7 +4,7 @@ import { ApplicationState } from '../stores';
 import { connect } from 'react-redux';
 import { LanguageActions } from '../stores/language/actions';
 import { Dropdown, Icon, Layout, Menu } from 'antd';
-import './home.css';
+import './home.less';
 
 const { Header, Sider, Content } = Layout;
 
@@ -35,8 +35,8 @@ class Home extends React.Component<Props, States> {
     };
 
     public shouldComponentUpdate(
-        nextProps: Readonly<Props>,
-        nextState: Readonly<{}>,
+        nextProps: Props,
+        nextState: States,
         nextContext: any
     ): boolean {
         if (this.props.language !== nextProps.language) {
@@ -110,7 +110,7 @@ class Home extends React.Component<Props, States> {
                             width: '100%',
                         }}
                     >
-                        <div className="header-index">
+                        <div className="header_index">
                             <span
                                 className="header-index-trigger"
                                 onClick={this.toggle}
@@ -128,7 +128,7 @@ class Home extends React.Component<Props, States> {
                                 <Dropdown overlay={this.accountMenu}>
                                     <span className="index-action">
                                         <Icon type="user" />
-                                        <span className="name">
+                                        <span className="user-name">
                                             {this.props.userName}
                                         </span>
                                     </span>
