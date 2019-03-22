@@ -144,7 +144,7 @@ class Login extends React.Component<Props, States> {
                                                     message: intl.formatMessage(
                                                         {
                                                             id:
-                                                                'login_input_placeholder_user_name',
+                                                                'login_username_input_error_empty',
                                                         }
                                                     ),
                                                 },
@@ -154,7 +154,7 @@ class Login extends React.Component<Props, States> {
                                                 placeholder={intl.formatMessage(
                                                     {
                                                         id:
-                                                            'login_input_placeholder_password',
+                                                            'login_input_placeholder_user_name',
                                                     }
                                                 )}
                                                 size="large"
