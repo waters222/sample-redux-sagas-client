@@ -3,14 +3,13 @@
 ### sample project for using 
 1. Redux
 2. Sagas
-3. Ant Design
-4. i18n
+3. [Ant Design](https://github.com/ant-design/ant-design)
+4. [i18n](https://github.com/yahoo/react-intl)
 4. jest testing
 
 
 ### how to start
 ```bash
-cd frontend
 yarn install
 yarn start
 ```
