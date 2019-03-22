@@ -10,6 +10,22 @@ import * as zh from 'react-intl/locale-data/zh';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import zhCNMessages from '../locales/zh_CN.json';
 
+export interface LanguageTypes {
+    key: string;
+    name: string;
+}
+
+export const Languages = [
+    {
+        key: 'zh_CN',
+        name: 'lang_chinese',
+    },
+    {
+        key: 'en_US',
+        name: 'lang_english',
+    },
+];
+
 export interface LanguageSetting {
     readonly languageWithoutRegionCode: string;
     readonly messages: object;

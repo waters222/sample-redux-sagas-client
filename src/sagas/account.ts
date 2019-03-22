@@ -1,50 +1,35 @@
-import {all, takeLatest} from 'redux-saga/effects';
+import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { AccountActionType } from '../stores/account/types';
 import { AccountActions } from '../stores/account/actions';
+import { fakeLogin, fakeLogout } from '../services';
 
 function* login(action: AccountActions) {
     if (action.type === AccountActionType.LOGIN) {
         const { name, password } = action.payload;
-        console.log(`login saga called, name: ${name}, password:${password}`);
+        try {
+            const session = yield call(fakeLogin, name, password);
+            yield put(AccountActions.loginSuccessful(name, session));
+        } catch (err) {
+            yield put(AccountActions.loginFailed(err));
+        }
     }
-
-    return true;
 }
 
-function* logout() {
-    console.log(`logout called`);
-    return true;
-}
-
-function* changeName(action: AccountActions) {
-    if (action.type === AccountActionType.CHANGE_NAME) {
-        console.log(`change name sagas: ${action.payload}`);
+function* logout(action: AccountActions) {
+    if (action.type === AccountActionType.LOGOUT) {
+        try {
+            yield call(fakeLogout);
+            yield put(AccountActions.logoutSuccessful());
+        } catch (err) {
+            yield put(AccountActions.logoutFailed(err.message));
+        }
     }
     return true;
 }
 
-// function* loginFlow() {
-//     try {
-//         while (true) {
-//             const action = yield take(AccountActionType.LOGIN);
-//             if (action.type === AccountActionType.LOGIN) {
-//                 const { name, password } = action.payload;
-//                 console.log(
-//                     `loginFlow login name: ${name}, password:${password}`
-//                 );
-//                 yield take(AccountActionType.LOGOUT);
-//                 console.log('loginFlow logout');
-//                 throw new Error('haha');
-//             }
-//         }
-//     } finally {
-//         console.log('login flow cancelled');
-//     }
-// }
 export default function* accountSaga() {
     yield all([
-        takeLatest(AccountActionType.LOGIN, login),
-        takeLatest(AccountActionType.LOGOUT, logout),
-        takeLatest(AccountActionType.CHANGE_NAME, changeName),
+        takeEvery(AccountActionType.LOGIN, login),
+        takeEvery(AccountActionType.LOGOUT, logout),
     ]);
 }
