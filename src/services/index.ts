@@ -31,7 +31,7 @@ const fakeLogin = async (name: string, password: string) => {
 };
 
 const fakeLogout = async () => {
-    await asyncTimeout(1500);
+    await asyncTimeout(300);
     if (fakeSession !== undefined) {
         fakeSession = undefined;
     }

@@ -2,14 +2,14 @@ import { AccountActionType, AccountState } from './types';
 import { Reducer } from 'redux';
 import { AccountActions } from './actions';
 import update from 'immutability-helper';
-import { storeSessionToCookie } from '../../constants/cookie';
+import { clearSessionCookie, storeSessionCookie } from '../../constants/cookie';
 
 const initialState: AccountState = {
     name: undefined,
     session: undefined,
     isLoginRequesting: false,
     errorLogin: undefined,
-    isLogout: false,
+    isLogoutRequesting: false,
     errorLogout: undefined,
 };
 
@@ -26,40 +26,44 @@ const reducer: Reducer<AccountState> = (
 
         case AccountActionType.LOGIN_SUCCESSFUL:
             const { name, session } = action.payload;
-            storeSessionToCookie(name, session);
-            return update(state, {
-                isLoginRequesting: { $set: false },
-                name: { $set: name },
-                session: { $set: session },
-            });
+            if (storeSessionCookie(name, session)) {
+                return update(state, {
+                    isLoginRequesting: { $set: false },
+                    name: { $set: name },
+                    session: { $set: session },
+                });
+            }
+            break;
 
         case AccountActionType.LOGIN_FAILED:
             return update(state, {
                 isLoginRequesting: { $set: false },
-                errorLogin: { $set: action.payload.error },
+                errorLogin: { $set: action.payload },
             });
 
         case AccountActionType.LOGOUT:
-            return update(state, {
-                isLogout: { $set: true },
-                errorLogout: { $set: undefined },
-            });
+            if (clearSessionCookie()) {
+                return update(state, {
+                    isLogoutRequesting: { $set: true },
+                    errorLogout: { $set: undefined },
+                });
+            }
+            break;
 
         case AccountActionType.LOGOUT_SUCCESSFUL:
             return update(state, {
-                isLogout: { $set: false },
+                isLogoutRequesting: { $set: false },
                 name: { $set: undefined },
                 session: { $set: undefined },
             });
 
         case AccountActionType.LOGOUT_FAILED:
             return update(state, {
-                isLogout: { $set: false },
-                errorLogout: { $set: action.payload.error },
+                isLogoutRequesting: { $set: false },
+                errorLogout: { $set: action.payload },
             });
-        default:
-            return state;
     }
+    return state;
 };
 
 export { reducer as accountReducer };

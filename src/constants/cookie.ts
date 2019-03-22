@@ -5,12 +5,25 @@ export enum Cookie {
     Session = 'cookie/session',
 }
 
+// for language setting
+const getLangCookie = (): string => {
+    const language = Cookies.get(Cookie.Language);
+    return language !== undefined
+        ? language
+        : (navigator.languages && navigator.languages[0]) || navigator.language;
+};
+
+const storeLangCookie = (lang: string) => {
+    Cookies.set(Cookie.Language, lang);
+};
+
+//  for session
 export interface SessionCookieType {
     name: string;
     session: string;
 }
 
-const getSessionFromCookie = (): SessionCookieType | undefined => {
+const getSessionCookie = (): SessionCookieType | undefined => {
     const sessionCookie = Cookies.get(Cookie.Session);
     if (sessionCookie !== undefined) {
         try {
@@ -37,15 +50,33 @@ const getSessionFromCookie = (): SessionCookieType | undefined => {
     return undefined;
 };
 
-const storeSessionToCookie = (name: string, session: string) => {
+const storeSessionCookie = (name: string, session: string): boolean => {
     try {
         Cookies.set(
             Cookie.Session,
             JSON.stringify({ name: name, session: session })
         );
+        return true;
     } catch (err) {
         console.log(`[ERROR] store session into cookie failed: ${err.message}`);
+        return false;
     }
 };
 
-export { getSessionFromCookie, storeSessionToCookie };
+const clearSessionCookie = (): boolean => {
+    try {
+        Cookies.remove(Cookie.Session);
+        return true;
+    } catch (err) {
+        console.log(`[ERROR] clear session into cookie failed: ${err.message}`);
+        return false;
+    }
+};
+
+export {
+    getSessionCookie,
+    storeSessionCookie,
+    clearSessionCookie,
+    getLangCookie,
+    storeLangCookie,
+};

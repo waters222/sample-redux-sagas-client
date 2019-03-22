@@ -16,14 +16,14 @@ export const AccountActions = {
         }),
 
     loginFailed: (error: ErrorAjax) =>
-        createAction(AccountActionType.LOGIN_FAILED, { error: error }),
+        createAction(AccountActionType.LOGIN_FAILED, error),
 
     logout: () => createAction(AccountActionType.LOGOUT),
 
     logoutSuccessful: () => createAction(AccountActionType.LOGOUT_SUCCESSFUL),
 
     logoutFailed: (error: ErrorAjax) =>
-        createAction(AccountActionType.LOGOUT_FAILED, { error: error }),
+        createAction(AccountActionType.LOGOUT_FAILED, error),
 };
 
 export type AccountActions = ActionUnion<typeof AccountActions>;

@@ -26,11 +26,15 @@ import {
 } from '../stores/account/selectors';
 import { ErrorAjax } from '../services';
 import { Redirect } from 'react-router';
+import { LanguageActions } from '../stores/language/actions';
+import { ClickParam } from 'antd/lib/menu';
+import { Languages } from '../utils/language-helpers';
 
 const { Header, Content } = Layout;
 
 interface Props extends FormComponentProps, InjectedIntlProps {
     login: (name: string, password: string) => void;
+    changeLanguage: (lang: string) => void;
     logout: () => void;
     bIsLogin: boolean;
     bLoginRequesting: boolean;
@@ -71,11 +75,22 @@ class Login extends React.Component<Props, States> {
         });
     };
 
+    public onChangeLanguage = (e: ClickParam) => {
+        this.props.changeLanguage(e.key);
+    };
+
     public langMenu = () => {
+        const menuItems = [];
+        for (const lang of Languages) {
+            menuItems.push(
+                <Menu.Item key={lang.key}>
+                    <FormattedMessage id={lang.name} />
+                </Menu.Item>
+            );
+        }
         return (
-            <Menu className="dropdown-menu">
-                <Menu.Item>English</Menu.Item>
-                <Menu.Item>Chinese</Menu.Item>
+            <Menu className="dropdown-menu" onClick={this.onChangeLanguage}>
+                {menuItems}
             </Menu>
         );
     };
@@ -102,11 +117,13 @@ class Login extends React.Component<Props, States> {
                 <Content>
                     <Layout>
                         <Header className="header-light header-index-center">
-                            <span className="header-title">Demo Client</span>
+                            <span className="header-title">
+                                <FormattedMessage id="client_title" />
+                            </span>
                         </Header>
                         <Content>
                             <div className="header-desc">
-                                Sample Redux Sagas Client
+                                <FormattedMessage id="client_desc" />
                             </div>
                             <div className="container">
                                 {loginError !== undefined ? (
@@ -127,14 +144,19 @@ class Login extends React.Component<Props, States> {
                                                     message: intl.formatMessage(
                                                         {
                                                             id:
-                                                                'login_username_input_error_empty',
+                                                                'login_input_placeholder_user_name',
                                                         }
                                                     ),
                                                 },
                                             ],
                                         })(
                                             <Input
-                                                placeholder="user name: admin"
+                                                placeholder={intl.formatMessage(
+                                                    {
+                                                        id:
+                                                            'login_input_placeholder_password',
+                                                    }
+                                                )}
                                                 size="large"
                                                 prefix={
                                                     <Icon
@@ -164,7 +186,12 @@ class Login extends React.Component<Props, States> {
                                             ],
                                         })(
                                             <Input
-                                                placeholder="password: admin"
+                                                placeholder={intl.formatMessage(
+                                                    {
+                                                        id:
+                                                            'login_input_placeholder_password',
+                                                    }
+                                                )}
                                                 type="password"
                                                 size="large"
                                                 prefix={
@@ -216,7 +243,8 @@ class Login extends React.Component<Props, States> {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     login: (name: string, password: string) =>
         dispatch(AccountActions.login(name, password)),
-    logout: () => dispatch(AccountActions.logout()),
+    changeLanguage: (lang: string) =>
+        dispatch(LanguageActions.changeLanguage(lang)),
 });
 
 const mapStateToProps = ({ account }: ApplicationState) => ({

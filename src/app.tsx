@@ -6,7 +6,7 @@ import './app.css';
 import { Route, Switch } from 'react-router';
 import NotFound from './pages/not-found';
 
-class App extends React.Component<{}> {
+class App extends React.Component {
     public render() {
         return (
             <div className="App">

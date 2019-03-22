@@ -16,6 +16,6 @@ export interface AccountState {
     readonly isLoginRequesting: boolean;
     readonly errorLogin: ErrorAjax | undefined;
 
-    readonly isLogout: boolean;
+    readonly isLogoutRequesting: boolean;
     readonly errorLogout: ErrorAjax | undefined;
 }

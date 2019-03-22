@@ -11,6 +11,8 @@ import NotFound from './not-found';
 import { isLogin } from '../stores/account/selectors';
 import { AccountActions } from '../stores/account/actions';
 import { FormattedMessage } from 'react-intl';
+import { ClickParam } from 'antd/lib/menu';
+import { Languages } from '../utils/language-helpers';
 
 const { Header, Sider, Content } = Layout;
 
@@ -34,12 +36,8 @@ class Dashboard extends React.Component<Props, States> {
         };
     }
 
-    public switchLan = () => {
-        if (this.props.language === 'zh_CN') {
-            this.props.changeLanguage('en_US');
-        } else {
-            this.props.changeLanguage('zh_CN');
-        }
+    public onChangeLanguage = (e: ClickParam) => {
+        this.props.changeLanguage(e.key);
     };
 
     public shouldComponentUpdate(
@@ -59,14 +57,17 @@ class Dashboard extends React.Component<Props, States> {
     };
 
     public langMenu = () => {
+        const menuItems = [];
+        for (const lang of Languages) {
+            menuItems.push(
+                <Menu.Item key={lang.key}>
+                    <FormattedMessage id={lang.name} />
+                </Menu.Item>
+            );
+        }
         return (
-            <Menu className="dropdown-menu">
-                <Menu.Item>
-                    <FormattedMessage id="lang_english" />
-                </Menu.Item>
-                <Menu.Item>
-                    <FormattedMessage id="lang_chinese" />
-                </Menu.Item>
+            <Menu className="dropdown-menu" onClick={this.onChangeLanguage}>
+                {menuItems}
             </Menu>
         );
     };

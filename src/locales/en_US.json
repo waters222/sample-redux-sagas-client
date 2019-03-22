@@ -4,6 +4,12 @@
     "account_info": "Account info",
     "logout": "Logout",
 
+    "client_title": "Demo Client",
+    "client_desc": "Sample Redux Sagas Client",
+
+    "login_input_placeholder_user_name": "user name: admin",
+    "login_input_placeholder_password": "password: admin",
+
     "not_fount_desc": "Sorry, the page you looking for does not exists",
     "back_to_home": "Back to home",
 
