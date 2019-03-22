@@ -8,7 +8,7 @@ import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import * as Cookies from 'es-cookie';
-import { Cookie } from './constants/cookie';
+import { Cookie, getSessionFromCookie } from './constants/cookie';
 import { accountInitialState } from './stores/account/reducers';
 import { LocaleProvider } from 'antd';
 import { IntlProvider } from 'react-intl';
@@ -25,27 +25,17 @@ if (language === undefined) {
 }
 const languageSetting = getLanguageSetting(language);
 // lets check if user logged in
-let sessionState = accountInitialState;
-const sessionCookie = Cookies.get(Cookie.Session);
-if (sessionCookie !== undefined) {
-    const sessionObject = Cookies.parse(sessionCookie);
-    // make sure both field is not empty
-    if (
-        sessionObject.name !== undefined &&
-        sessionObject.name !== '' &&
-        sessionObject.session !== undefined &&
-        sessionObject.session !== ''
-    ) {
-        sessionState = {
-            name: sessionObject.name,
-            session: sessionObject.session,
-            isLogin: false,
-            errorLogin: undefined,
-            isLogout: false,
-            errorLogout: undefined,
-        };
-    }
-}
+
+const sessionCookie = getSessionFromCookie();
+const sessionState =
+    sessionCookie !== undefined
+        ? {
+              ...accountInitialState,
+              name: sessionCookie.name,
+              session: sessionCookie.session,
+          }
+        : accountInitialState;
+
 const store = configureStore(history, {
     account: sessionState,
     language: { language: language },

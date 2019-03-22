@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "~1.1.0",
+    "@ant-design/icons-react": "^1.1.2",
     "antd": "^3.10.9",
     "axios": "^0.18.0",
     "connected-react-router": "^5.0.1",

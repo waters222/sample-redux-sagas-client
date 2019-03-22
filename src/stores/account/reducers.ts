@@ -2,11 +2,12 @@ import { AccountActionType, AccountState } from './types';
 import { Reducer } from 'redux';
 import { AccountActions } from './actions';
 import update from 'immutability-helper';
+import { storeSessionToCookie } from '../../constants/cookie';
 
 const initialState: AccountState = {
     name: undefined,
     session: undefined,
-    isLogin: false,
+    isLoginRequesting: false,
     errorLogin: undefined,
     isLogout: false,
     errorLogout: undefined,
@@ -19,21 +20,22 @@ const reducer: Reducer<AccountState> = (
     switch (action.type) {
         case AccountActionType.LOGIN:
             return update(state, {
-                isLogin: { $set: true },
+                isLoginRequesting: { $set: true },
                 errorLogin: { $set: undefined },
             });
 
         case AccountActionType.LOGIN_SUCCESSFUL:
             const { name, session } = action.payload;
+            storeSessionToCookie(name, session);
             return update(state, {
-                isLogin: { $set: false },
+                isLoginRequesting: { $set: false },
                 name: { $set: name },
                 session: { $set: session },
             });
 
         case AccountActionType.LOGIN_FAILED:
             return update(state, {
-                isLogin: { $set: false },
+                isLoginRequesting: { $set: false },
                 errorLogin: { $set: action.payload.error },
             });
 

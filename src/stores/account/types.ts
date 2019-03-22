@@ -1,3 +1,5 @@
+import { ErrorAjax } from '../../services';
+
 export enum AccountActionType {
     LOGIN = '@@account/LOGIN',
     LOGIN_SUCCESSFUL = '@@account/LOGIN_SUCCESSFUL',
@@ -11,9 +13,9 @@ export interface AccountState {
     readonly name: string | undefined;
     readonly session: string | undefined;
 
-    readonly isLogin: boolean;
-    readonly errorLogin: string | undefined;
+    readonly isLoginRequesting: boolean;
+    readonly errorLogin: ErrorAjax | undefined;
 
     readonly isLogout: boolean;
-    readonly errorLogout: string | undefined;
+    readonly errorLogout: ErrorAjax | undefined;
 }

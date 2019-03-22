@@ -10,3 +10,7 @@ export const isLogin: Selector<AccountState, boolean> = createSelector(
     getName,
     (session, name) => session !== undefined && name !== undefined
 );
+
+export const isLoginRequesting = (state: AccountState) =>
+    state.isLoginRequesting;
+export const getLoginError = (state: AccountState) => state.errorLogin;

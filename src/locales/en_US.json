@@ -1,7 +1,16 @@
 {
-    "app.login": "Login",
-    "app.logout": "Logout",
-    "app.change.name": "change name",
-    "app.test.message0": "This is test message 0",
-    "app.test.message1": "This is test message 1"
+    "lang_chinese": "Chinese",
+    "lang_english": "English",
+    "account_info": "Account info",
+    "logout": "Logout",
+
+    "not_fount_desc": "Sorry, the page you looking for does not exists",
+    "back_to_home": "Back to home",
+
+    "submit": "Submit",
+    "login_remember_me": "Remember me",
+    "login_username_input_error_empty" : "Please input your username!",
+    "login_password_input_error_empty" : "Please input your Password!",
+
+    "ajax_invalid_password": "user name & password not match!"
 }

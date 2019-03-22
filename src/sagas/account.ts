@@ -10,7 +10,7 @@ function* login(action: AccountActions) {
             const session = yield call(fakeLogin, name, password);
             yield put(AccountActions.loginSuccessful(name, session));
         } catch (err) {
-            yield put(AccountActions.loginFailed(err.message));
+            yield put(AccountActions.loginFailed(err));
         }
     }
 }

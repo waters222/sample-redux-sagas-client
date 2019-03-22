@@ -1,5 +1,6 @@
 import { AccountActionType } from './types';
 import { ActionUnion, createAction } from '../action-helper';
+import { ErrorAjax } from '../../services';
 
 export const AccountActions = {
     login: (name: string, password: string) =>
@@ -14,14 +15,14 @@ export const AccountActions = {
             session: session,
         }),
 
-    loginFailed: (error: string) =>
+    loginFailed: (error: ErrorAjax) =>
         createAction(AccountActionType.LOGIN_FAILED, { error: error }),
 
     logout: () => createAction(AccountActionType.LOGOUT),
 
     logoutSuccessful: () => createAction(AccountActionType.LOGOUT_SUCCESSFUL),
 
-    logoutFailed: (error: string) =>
+    logoutFailed: (error: ErrorAjax) =>
         createAction(AccountActionType.LOGOUT_FAILED, { error: error }),
 };
 

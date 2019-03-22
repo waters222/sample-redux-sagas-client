@@ -1,3 +1,19 @@
+class ErrorAjax extends Error {
+    public id: string;
+    public message: string = '';
+    constructor(id: string, message?: string) {
+        super(message);
+        this.id = id;
+        if (message !== undefined) {
+            this.message = message;
+        }
+    }
+}
+
+export enum ErrorAjaxType {
+    INVALID_PASSWORD = 'ajax_invalid_password',
+}
+
 const asyncTimeout = (ms: number) => {
     return new Promise(resolve => setTimeout(resolve, ms));
 };
@@ -9,7 +25,7 @@ const fakeLogin = async (name: string, password: string) => {
     if (name === 'admin' && password === 'admin') {
         fakeSession = `fake_session_${Date.now()}`;
     } else {
-        throw new Error('user name & password not match');
+        throw new ErrorAjax(ErrorAjaxType.INVALID_PASSWORD);
     }
     return fakeSession;
 };
@@ -20,4 +36,4 @@ const fakeLogout = async () => {
         fakeSession = undefined;
     }
 };
-export { fakeLogin, fakeLogout };
+export { fakeLogin, fakeLogout, ErrorAjax };

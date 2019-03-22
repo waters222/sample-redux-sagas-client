@@ -4,11 +4,13 @@ import { ApplicationState } from '../stores';
 import { connect } from 'react-redux';
 import { LanguageActions } from '../stores/language/actions';
 import { Dropdown, Icon, Layout, Menu } from 'antd';
-import './home.less';
+import './dashboard.less';
 import { Redirect, Route, Switch } from 'react-router';
 import Account from './account';
-import { NotFound } from './not-fount';
+import NotFound from './not-found';
 import { isLogin } from '../stores/account/selectors';
+import { AccountActions } from '../stores/account/actions';
+import { FormattedMessage } from 'react-intl';
 
 const { Header, Sider, Content } = Layout;
 
@@ -17,13 +19,14 @@ interface Props {
     readonly userName: string | undefined;
     readonly bIsLogin: boolean;
     changeLanguage: (language: string) => void;
+    logout: () => void;
 }
 
 interface States {
     collapsed: boolean;
 }
 
-class Home extends React.Component<Props, States> {
+class Dashboard extends React.Component<Props, States> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -51,11 +54,19 @@ class Home extends React.Component<Props, States> {
         this.setState({ collapsed: !this.state.collapsed });
     };
 
+    public onClickLogout = () => {
+        this.props.logout();
+    };
+
     public langMenu = () => {
         return (
             <Menu className="dropdown-menu">
-                <Menu.Item>English</Menu.Item>
-                <Menu.Item>Chinese</Menu.Item>
+                <Menu.Item>
+                    <FormattedMessage id="lang_english" />
+                </Menu.Item>
+                <Menu.Item>
+                    <FormattedMessage id="lang_chinese" />
+                </Menu.Item>
             </Menu>
         );
     };
@@ -65,12 +76,12 @@ class Home extends React.Component<Props, States> {
             <Menu className="dropdown-menu">
                 <Menu.Item>
                     <Icon type="user" />
-                    Account Info
+                    <FormattedMessage id="account_info" />
                 </Menu.Item>
                 <Menu.Divider />
-                <Menu.Item>
+                <Menu.Item onClick={this.onClickLogout}>
                     <Icon type="logout" />
-                    Logout
+                    <FormattedMessage id="logout" />
                 </Menu.Item>
             </Menu>
         );
@@ -78,7 +89,7 @@ class Home extends React.Component<Props, States> {
 
     public render() {
         if (!this.props.bIsLogin) {
-            return <Redirect to="/login" />;
+            return <Redirect to="/" />;
         }
         return (
             <Layout className="layout-top-layer">
@@ -107,14 +118,8 @@ class Home extends React.Component<Props, States> {
                     </Menu>
                 </Sider>
                 <Layout>
-                    <Header
-                        style={{
-                            background: '#fff',
-                            padding: 0,
-                            width: '100%',
-                        }}
-                    >
-                        <div className="header_index">
+                    <Header className="header-white header-index">
+                        <div className="header-index-box-shadow">
                             <span
                                 className="header-index-trigger"
                                 onClick={this.toggle}
@@ -166,9 +171,10 @@ const mapStateToProps = ({ language, account }: ApplicationState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     changeLanguage: (language: string) =>
         dispatch(LanguageActions.changeLanguage(language)),
+    logout: () => dispatch(AccountActions.logout()),
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Home);
+)(Dashboard);

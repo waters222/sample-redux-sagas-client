@@ -1,15 +1,40 @@
 import * as React from 'react';
-import { Button, Form, Icon, Input, Layout } from 'antd';
-import './login.less';
+import {
+    Alert,
+    Button,
+    Checkbox,
+    Dropdown,
+    Form,
+    Icon,
+    Input,
+    Layout,
+} from 'antd';
 import { ChangeEvent } from 'react';
 import { AccountActions } from '../stores/account/actions';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { FormComponentProps } from 'antd/lib/form';
+import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
+import './login.less';
+import { Menu } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { ApplicationState } from '../stores';
+import {
+    getLoginError,
+    isLogin,
+    isLoginRequesting,
+} from '../stores/account/selectors';
+import { ErrorAjax } from '../services';
+import { Redirect } from 'react-router';
 
-interface Props extends FormComponentProps {
+const { Header, Content } = Layout;
+
+interface Props extends FormComponentProps, InjectedIntlProps {
     login: (name: string, password: string) => void;
     logout: () => void;
+    bIsLogin: boolean;
+    bLoginRequesting: boolean;
+    loginError: ErrorAjax | undefined;
 }
 
 interface States {
@@ -25,14 +50,6 @@ class Login extends React.Component<Props, States> {
             password: '',
         };
     }
-    public loginSubmit = () => {
-        console.log('login submit');
-        this.props.login('test', '123321');
-    };
-
-    public logoutSubmit = () => {
-        this.props.logout();
-    };
 
     public onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({ userName: e.target.value });
@@ -42,78 +59,155 @@ class Login extends React.Component<Props, States> {
         this.setState({ password: e.target.value });
     };
 
+    public onChangeRememberMe = (e: CheckboxChangeEvent) => {
+        console.log(`remember me: ${e.target.checked}`);
+    };
+
     public onSubmit = () => {
-        console.log('login submitted');
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(`login successful: ${values}`);
+                this.props.login(values.userName, values.password);
             }
         });
     };
 
+    public langMenu = () => {
+        return (
+            <Menu className="dropdown-menu">
+                <Menu.Item>English</Menu.Item>
+                <Menu.Item>Chinese</Menu.Item>
+            </Menu>
+        );
+    };
+
     public render() {
         const { getFieldDecorator } = this.props.form;
+        const { intl, bLoginRequesting, loginError, bIsLogin } = this.props;
+        if (bIsLogin) {
+            return <Redirect to="/dashboard" />;
+        }
         return (
             <Layout className="layout-top-layer">
-                <Form className="login-form">
-                    <Form.Item>
-                        {getFieldDecorator('userName', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Please input your username!',
-                                },
-                            ],
-                        })(
-                            <Input
-                                placeholder="admin"
-                                prefix={
-                                    <Icon
-                                        type="user"
-                                        style={{
-                                            color: 'rgba(0,0,0,.25)',
-                                        }}
+                <Header className="header-light">
+                    <div className="header-index">
+                        <div className="header-index-right">
+                            <Dropdown overlay={this.langMenu}>
+                                <span className="index-action lang-select-dropdown">
+                                    <Icon type="global" />
+                                </span>
+                            </Dropdown>
+                        </div>
+                    </div>
+                </Header>
+                <Content>
+                    <Layout>
+                        <Header className="header-light header-index-center">
+                            <span className="header-title">Demo Client</span>
+                        </Header>
+                        <Content>
+                            <div className="header-desc">
+                                Sample Redux Sagas Client
+                            </div>
+                            <div className="container">
+                                {loginError !== undefined ? (
+                                    <Alert
+                                        showIcon={true}
+                                        type="error"
+                                        message={intl.formatMessage({
+                                            id: loginError.id,
+                                        })}
                                     />
-                                }
-                                onChange={this.onChangeUserName}
-                            />
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        {getFieldDecorator('password', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Please input your Password!',
-                                },
-                            ],
-                        })(
-                            <Input
-                                placeholder="admin"
-                                type="password"
-                                prefix={
-                                    <Icon
-                                        type="lock"
-                                        style={{
-                                            color: 'rgba(0,0,0,.25)',
-                                        }}
-                                    />
-                                }
-                                onChange={this.onChangePassword}
-                            />
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        <Button
-                            htmlType="submit"
-                            type="primary"
-                            onClick={this.onSubmit}
-                            className="login-form-button"
-                        >
-                            submit
-                        </Button>
-                    </Form.Item>
-                </Form>
+                                ) : null}
+                                <Form className="login-form">
+                                    <Form.Item>
+                                        {getFieldDecorator('userName', {
+                                            rules: [
+                                                {
+                                                    required: true,
+                                                    message: intl.formatMessage(
+                                                        {
+                                                            id:
+                                                                'login_username_input_error_empty',
+                                                        }
+                                                    ),
+                                                },
+                                            ],
+                                        })(
+                                            <Input
+                                                placeholder="user name: admin"
+                                                size="large"
+                                                prefix={
+                                                    <Icon
+                                                        type="user"
+                                                        style={{
+                                                            color:
+                                                                'rgba(0,0,0,.25)',
+                                                        }}
+                                                    />
+                                                }
+                                                onChange={this.onChangeUserName}
+                                            />
+                                        )}
+                                    </Form.Item>
+                                    <Form.Item>
+                                        {getFieldDecorator('password', {
+                                            rules: [
+                                                {
+                                                    required: true,
+                                                    message: intl.formatMessage(
+                                                        {
+                                                            id:
+                                                                'login_password_input_error_empty',
+                                                        }
+                                                    ),
+                                                },
+                                            ],
+                                        })(
+                                            <Input
+                                                placeholder="password: admin"
+                                                type="password"
+                                                size="large"
+                                                prefix={
+                                                    <Icon
+                                                        type="lock"
+                                                        style={{
+                                                            color:
+                                                                'rgba(0,0,0,.25)',
+                                                        }}
+                                                    />
+                                                }
+                                                onChange={this.onChangePassword}
+                                            />
+                                        )}
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <div style={{ float: 'left' }}>
+                                            <Checkbox
+                                                onChange={
+                                                    this.onChangeRememberMe
+                                                }
+                                            >
+                                                <FormattedMessage id="login_remember_me" />
+                                            </Checkbox>
+                                        </div>
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <Button
+                                            htmlType="submit"
+                                            type="primary"
+                                            onClick={this.onSubmit}
+                                            className="login-form-button"
+                                            size="large"
+                                            loading={bLoginRequesting}
+                                        >
+                                            <FormattedMessage id="submit" />
+                                        </Button>
+                                    </Form.Item>
+                                </Form>
+                            </div>
+                        </Content>
+                    </Layout>
+                </Content>
             </Layout>
         );
     }
@@ -125,9 +219,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     logout: () => dispatch(AccountActions.logout()),
 });
 
+const mapStateToProps = ({ account }: ApplicationState) => ({
+    bLoginRequesting: isLoginRequesting(account),
+    loginError: getLoginError(account),
+    bIsLogin: isLogin(account),
+});
+
 const WrappedLoginForm = Form.create({ name: 'login_form' })(Login);
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
-)(WrappedLoginForm);
+)(injectIntl(WrappedLoginForm));
