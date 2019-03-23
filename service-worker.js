@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/sample-reudx-sagas-client/precache-manifest.8aa2025dc8fd9d9895c0061723689026.js"
+  "/sample-reudx-sagas-client/precache-manifest.8b59cef3d544bf62ea9d6f36c22ef258.js"
 );
 
 workbox.clientsClaim();
