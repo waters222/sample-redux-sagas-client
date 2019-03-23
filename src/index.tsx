@@ -12,9 +12,10 @@ import { accountInitialState } from './stores/account/reducers';
 import { LocaleProvider } from 'antd';
 import { IntlProvider } from 'react-intl';
 import { getLanguageSetting } from './utils/language-helpers';
+import config from './configs/config';
 
 // get history
-const history = createBrowserHistory();
+const history = createBrowserHistory({ basename: config.basePath });
 
 // lets check if we have language cookie stored, if not using browser default
 const language = getLangCookie();
@@ -47,7 +48,7 @@ ReactDOM.render(
             messages={languageSetting.messages}
         >
             <LocaleProvider locale={languageSetting.locale}>
-                <ConnectedRouter history={history}>
+                <ConnectedRouter history={history} >
                     <App />
                 </ConnectedRouter>
             </LocaleProvider>

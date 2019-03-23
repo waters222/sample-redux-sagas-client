@@ -1,15 +1,17 @@
 class BaseConfig {
+    public readonly host: string;
     public readonly basePath: string;
     public readonly bIsDev: boolean = true;
-    constructor(isDev: boolean, basePath: string) {
+    constructor(isDev: boolean, host: string, basePath: string) {
         this.bIsDev = isDev;
-        this.basePath = basePath;
+        this.host = basePath;
+        this.basePath = basePath
     }
 }
 let config: BaseConfig;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    config = new BaseConfig(true, 'http://localhost:9191/v1');
+    config = new BaseConfig(true, 'http://localhost:3000', '/sample-redux-sagas-client');
 } else {
-    config = new BaseConfig(false, 'http://localhost/v1');
+    config = new BaseConfig(false, 'https://weishi258.github.io', '/sample-redux-sagas-client');
 }
 export default config;

@@ -1,4 +1,4 @@
-# sample-reudx-sagas-client
+# sample-redux-sagas-client
 
 ### sample project for using 
 1. Redux

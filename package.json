@@ -1,5 +1,6 @@
 {
-  "name": "sample-reudx-sagas-client",
+  "name": "sample-redux-sagas-client",
+  "homepage": "https://weishi258.github.io/sample-redux-sagas-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,8 +29,11 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test ",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
+
   "devDependencies": {
     "@types/immutability-helper": "^2.6.3",
     "@types/jest": "^23.3.10",
@@ -43,6 +47,7 @@
     "css-loader": "^2.1.1",
     "customize-cra": "^0.2.12",
     "eslint-plugin-prettier": "^3.0.1",
+    "gh-pages": "^2.0.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "prettier": "^1.16.4",
