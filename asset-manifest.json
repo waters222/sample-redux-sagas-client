@@ -1,15 +1,15 @@
 {
-  "main.css": "/sample-reudx-sagas-client/static/css/main.c9baac72.chunk.css",
-  "main.js": "/sample-reudx-sagas-client/static/js/main.6e92273f.chunk.js",
-  "main.js.map": "/sample-reudx-sagas-client/static/js/main.6e92273f.chunk.js.map",
-  "runtime~main.js": "/sample-reudx-sagas-client/static/js/runtime~main.6a572811.js",
-  "runtime~main.js.map": "/sample-reudx-sagas-client/static/js/runtime~main.6a572811.js.map",
-  "static/css/2.5f2e7703.chunk.css": "/sample-reudx-sagas-client/static/css/2.5f2e7703.chunk.css",
-  "static/js/2.5be67eb5.chunk.js": "/sample-reudx-sagas-client/static/js/2.5be67eb5.chunk.js",
-  "static/js/2.5be67eb5.chunk.js.map": "/sample-reudx-sagas-client/static/js/2.5be67eb5.chunk.js.map",
-  "index.html": "/sample-reudx-sagas-client/index.html",
-  "precache-manifest.8b59cef3d544bf62ea9d6f36c22ef258.js": "/sample-reudx-sagas-client/precache-manifest.8b59cef3d544bf62ea9d6f36c22ef258.js",
-  "service-worker.js": "/sample-reudx-sagas-client/service-worker.js",
-  "static/css/2.5f2e7703.chunk.css.map": "/sample-reudx-sagas-client/static/css/2.5f2e7703.chunk.css.map",
-  "static/css/main.c9baac72.chunk.css.map": "/sample-reudx-sagas-client/static/css/main.c9baac72.chunk.css.map"
+  "main.css": "/sample-redux-sagas-client/static/css/main.c9baac72.chunk.css",
+  "main.js": "/sample-redux-sagas-client/static/js/main.cd3f18f1.chunk.js",
+  "main.js.map": "/sample-redux-sagas-client/static/js/main.cd3f18f1.chunk.js.map",
+  "runtime~main.js": "/sample-redux-sagas-client/static/js/runtime~main.027d45e8.js",
+  "runtime~main.js.map": "/sample-redux-sagas-client/static/js/runtime~main.027d45e8.js.map",
+  "static/css/2.5f2e7703.chunk.css": "/sample-redux-sagas-client/static/css/2.5f2e7703.chunk.css",
+  "static/js/2.8b692940.chunk.js": "/sample-redux-sagas-client/static/js/2.8b692940.chunk.js",
+  "static/js/2.8b692940.chunk.js.map": "/sample-redux-sagas-client/static/js/2.8b692940.chunk.js.map",
+  "index.html": "/sample-redux-sagas-client/index.html",
+  "precache-manifest.3777cede4ac72544255fc3784873cd86.js": "/sample-redux-sagas-client/precache-manifest.3777cede4ac72544255fc3784873cd86.js",
+  "service-worker.js": "/sample-redux-sagas-client/service-worker.js",
+  "static/css/2.5f2e7703.chunk.css.map": "/sample-redux-sagas-client/static/css/2.5f2e7703.chunk.css.map",
+  "static/css/main.c9baac72.chunk.css.map": "/sample-redux-sagas-client/static/css/main.c9baac72.chunk.css.map"
 }

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/sample-reudx-sagas-client/precache-manifest.8b59cef3d544bf62ea9d6f36c22ef258.js"
+  "/sample-redux-sagas-client/precache-manifest.3777cede4ac72544255fc3784873cd86.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/sample-reudx-sagas-client/index.html", {
+workbox.routing.registerNavigationRoute("/sample-redux-sagas-client/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
