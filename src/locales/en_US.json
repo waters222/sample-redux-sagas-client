@@ -1,8 +1,14 @@
 {
     "lang_chinese": "Chinese",
     "lang_english": "English",
+    "dashboard": "Dashboard",
+    "account" : "Account",
     "account_info": "Account info",
     "logout": "Logout",
+    "avatar": "Avatar",
+    "avatar_upload": "Change Avatar",
+    "avatar_upload_invalid_format": "invalid avatar file format {format}",
+    "avatar_upload_too_large": "can no upload file size larger then 2MB",
 
     "client_title": "Demo Client",
     "client_desc": "Sample Redux Sagas Client",

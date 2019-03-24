@@ -11,9 +11,11 @@ import NotFound from './not-found';
 import { isLogin } from '../stores/account/selectors';
 import { AccountActions } from '../stores/account/actions';
 import { FormattedMessage } from 'react-intl';
-import { ClickParam } from 'antd/lib/menu';
+import { ClickParam, SelectParam } from 'antd/lib/menu';
 import { Languages } from '../utils/language-helpers';
 import Home from './dashboard/home';
+import logo from '../assets/images/logo.svg';
+import SubMenu from 'antd/lib/menu/SubMenu';
 
 const { Header, Sider, Content } = Layout;
 
@@ -62,7 +64,29 @@ class Dashboard extends React.Component<Props, States> {
     };
 
     public onClickAccountInfo = () => {
-        this.props.history.push(`${this.props.match.url}/account`);
+        this.props.history.push(`${this.props.match.url}/account/info`);
+    };
+
+    public getMenuKeysFromPath = (props: Props) => {
+        const path = props.location.pathname.replace(props.match.url, '');
+        const selectedKey = path.length === 0 ? '/' : path;
+        const temp = selectedKey.split('/');
+        if (temp.length > 2) {
+            return {
+                selectedKey: selectedKey,
+                openKey: `/${temp[1]}`,
+            };
+        } else {
+            return {
+                selectedKey: selectedKey,
+                openKey: '/',
+            };
+        }
+    };
+
+    public onSelect = (selection: SelectParam) => {
+        const url = selection.key === '/' ? '' : selection.key;
+        this.props.history.push(`${this.props.match.url}${url}`);
     };
 
     public langMenu = () => {
@@ -102,6 +126,7 @@ class Dashboard extends React.Component<Props, States> {
             return <Redirect to="/" />;
         }
         const { match } = this.props;
+        const { selectedKey, openKey } = this.getMenuKeysFromPath(this.props);
         return (
             <Layout className="layout-top-layer">
                 <Sider
@@ -110,26 +135,37 @@ class Dashboard extends React.Component<Props, States> {
                     collapsed={this.state.collapsed}
                 >
                     <div className="logo" onClick={this.onClickLogo}>
-                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K" />
+                        <img src={logo} />
                         <FormattedMessage id="client_title" />
                     </div>
                     <Menu
                         theme="dark"
                         mode="inline"
-                        defaultSelectedKeys={['1']}
+                        onSelect={this.onSelect}
+                        defaultOpenKeys={[openKey]}
+                        selectedKeys={[selectedKey]}
                     >
-                        <Menu.Item key="1">
-                            <Icon type="user" />
-                            <span>nav 1</span>
+                        <Menu.Item key="/">
+                            <Icon type="dashboard" />
+                            <FormattedMessage id="dashboard" />
                         </Menu.Item>
-                        <Menu.Item key="2">
-                            <Icon type="video-camera" />
-                            <span>nav 2</span>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Icon type="upload" />
-                            <span>nav 3</span>
-                        </Menu.Item>
+                        <SubMenu
+                            title={
+                                <span>
+                                    <Icon type="user" />
+                                    <span>
+                                        <FormattedMessage id="account" />
+                                    </span>
+                                </span>
+                            }
+                            key="/account"
+                        >
+                            <Menu.Item key="/account/info">
+                                <span>
+                                    <FormattedMessage id="account_info" />
+                                </span>
+                            </Menu.Item>
+                        </SubMenu>
                     </Menu>
                 </Sider>
                 <Layout>
@@ -173,7 +209,7 @@ class Dashboard extends React.Component<Props, States> {
                                 component={Home}
                             />
                             <Route
-                                path={`${match.url}/account`}
+                                path={`${match.url}/account/info`}
                                 component={Account}
                             />
                             <Route component={NotFound} />

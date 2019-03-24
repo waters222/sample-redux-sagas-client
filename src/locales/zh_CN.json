@@ -1,8 +1,14 @@
 {
     "lang_chinese": "中文",
     "lang_english": "英文",
+    "dashboard": "Dashboard",
+    "account" : "账户",
     "account_info": "账户信息",
     "logout": "登出",
+    "avatar": "头像",
+    "avatar_upload": "更换头像",
+    "avatar_upload_invalid_format": "非法头像格式 {format}",
+    "avatar_upload_too_large": "头像大小不能超过 2MB",
 
     "client_title": "客户端范例",
     "client_desc": "Redux Sagas 客户端范例",

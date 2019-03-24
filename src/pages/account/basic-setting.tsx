@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import './basic-setting.less';
-import { Button, Form, Input, Spin } from 'antd';
+import { Avatar, Button, Form, Input, Spin, Upload, Icon, message } from 'antd';
 import { ChangeEvent } from 'react';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { FormComponentProps } from 'antd/lib/form';
@@ -12,6 +12,9 @@ import {
     getAccountEmail,
     getAccountPhone,
 } from '../../stores/account/selectors';
+
+import avatar from '../../assets/images/avatar_0.svg';
+import { RcFile, UploadChangeParam } from 'antd/lib/upload/interface';
 
 interface Props extends FormComponentProps, InjectedIntlProps {
     getInfo: () => void;
@@ -24,6 +27,8 @@ interface Props extends FormComponentProps, InjectedIntlProps {
 
 interface States {
     bHasUpdate: boolean;
+    bUploading: boolean;
+    avatarData: string | null;
 }
 
 class BasicSetting extends React.Component<Props, States> {
@@ -31,6 +36,8 @@ class BasicSetting extends React.Component<Props, States> {
         super(props);
         this.state = {
             bHasUpdate: false,
+            bUploading: false,
+            avatarData: null,
         };
     }
 
@@ -60,6 +67,58 @@ class BasicSetting extends React.Component<Props, States> {
         });
     };
 
+    public beforeUpload = (file: RcFile): boolean | Promise<any> => {
+        const { intl } = this.props;
+        switch (file.type) {
+            case 'image/jpeg':
+                break;
+            case 'image/jpg':
+                break;
+            case 'image/png':
+                break;
+            case 'image/svg+xml':
+                break;
+            default:
+                message.error(
+                    `${intl.formatMessage(
+                        { id: 'avatar_upload_invalid_format' },
+                        { format: file.type }
+                    )}`
+                );
+                return false;
+        }
+        const isTooLarge = file.size / 1024 / 1024 > 2;
+        if (isTooLarge) {
+            message.error(
+                `${intl.formatMessage({ id: 'avatar_upload_too_large' })}`
+            );
+            return false;
+        }
+        return true;
+    };
+
+    public handleUploadChange = (info: UploadChangeParam) => {
+        if (info.file.status === 'uploading') {
+            this.setState({ bUploading: true });
+            return;
+        }
+        if (
+            info.file.status === 'done' &&
+            info.file.originFileObj !== undefined
+        ) {
+            const reader = new FileReader();
+            reader.addEventListener('load', () => {
+                if (!(reader.result instanceof ArrayBuffer)) {
+                    this.setState({
+                        bUploading: false,
+                        avatarData: reader.result,
+                    });
+                }
+            });
+            reader.readAsDataURL(info.file.originFileObj);
+        }
+    };
+
     public componentDidMount(): void {
         this.props.getInfo();
     }
@@ -74,6 +133,8 @@ class BasicSetting extends React.Component<Props, States> {
         } else {
             const { intl, email, phone } = this.props;
             const { getFieldDecorator } = this.props.form;
+            const avatarSrc =
+                this.state.avatarData !== null ? this.state.avatarData : avatar;
             return (
                 <div className="basic-setting-container">
                     <div className="leftPart">
@@ -131,7 +192,26 @@ class BasicSetting extends React.Component<Props, States> {
                             </Button>
                         </Form>
                     </div>
-                    <div className="rightPart">right part</div>
+                    <div className="rightPart">
+                        <div className="avatarTitle">
+                            <FormattedMessage id="avatar" />
+                        </div>
+                        <div className="avatarIcon">
+                            <Avatar size={128} src={avatarSrc} />
+                        </div>
+                        <Upload
+                            name="logo"
+                            beforeUpload={this.beforeUpload}
+                            action="//jsonplaceholder.typicode.com/posts/"
+                            showUploadList={false}
+                            onChange={this.handleUploadChange}
+                        >
+                            <Button loading={this.state.bUploading}>
+                                <Icon type="upload" />{' '}
+                                <FormattedMessage id="avatar_upload" />
+                            </Button>
+                        </Upload>
+                    </div>
                 </div>
             );
         }
