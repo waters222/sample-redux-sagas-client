@@ -5,18 +5,19 @@ import { connect } from 'react-redux';
 import { LanguageActions } from '../stores/language/actions';
 import { Dropdown, Icon, Layout, Menu } from 'antd';
 import './dashboard.less';
-import { Redirect, Route, Switch } from 'react-router';
-import Account from './account';
+import { Redirect, Route, RouteComponentProps, Switch } from 'react-router';
+import Account from './account/account';
 import NotFound from './not-found';
 import { isLogin } from '../stores/account/selectors';
 import { AccountActions } from '../stores/account/actions';
 import { FormattedMessage } from 'react-intl';
 import { ClickParam } from 'antd/lib/menu';
 import { Languages } from '../utils/language-helpers';
+import Home from './dashboard/home';
 
 const { Header, Sider, Content } = Layout;
 
-interface Props {
+interface Props extends RouteComponentProps {
     readonly language: string;
     readonly userName: string | undefined;
     readonly bIsLogin: boolean;
@@ -52,8 +53,16 @@ class Dashboard extends React.Component<Props, States> {
         this.setState({ collapsed: !this.state.collapsed });
     };
 
+    public onClickLogo = () => {
+        this.props.history.push(`${this.props.match.url}`);
+    };
+
     public onClickLogout = () => {
         this.props.logout();
+    };
+
+    public onClickAccountInfo = () => {
+        this.props.history.push(`${this.props.match.url}/account`);
     };
 
     public langMenu = () => {
@@ -75,7 +84,7 @@ class Dashboard extends React.Component<Props, States> {
     public accountMenu = () => {
         return (
             <Menu className="dropdown-menu">
-                <Menu.Item>
+                <Menu.Item onClick={this.onClickAccountInfo}>
                     <Icon type="user" />
                     <FormattedMessage id="account_info" />
                 </Menu.Item>
@@ -92,6 +101,7 @@ class Dashboard extends React.Component<Props, States> {
         if (!this.props.bIsLogin) {
             return <Redirect to="/" />;
         }
+        const { match } = this.props;
         return (
             <Layout className="layout-top-layer">
                 <Sider
@@ -99,6 +109,10 @@ class Dashboard extends React.Component<Props, States> {
                     collapsible={true}
                     collapsed={this.state.collapsed}
                 >
+                    <div className="logo" onClick={this.onClickLogo}>
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K" />
+                        <FormattedMessage id="client_title" />
+                    </div>
                     <Menu
                         theme="dark"
                         mode="inline"
@@ -153,7 +167,15 @@ class Dashboard extends React.Component<Props, States> {
                     </Header>
                     <Content className="content">
                         <Switch>
-                            <Route path="/account" component={Account} />
+                            <Route
+                                exact={true}
+                                path={`${match.url}`}
+                                component={Home}
+                            />
+                            <Route
+                                path={`${match.url}/account`}
+                                component={Account}
+                            />
                             <Route component={NotFound} />
                         </Switch>
                     </Content>

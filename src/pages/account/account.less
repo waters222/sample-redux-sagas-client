@@ -1,0 +1,29 @@
+@import "../../themes/main.less";
+
+
+.account{
+    display: flex;
+    width: 100vm;
+    height: 100vh;
+    padding: 1rem 0 1rem 0;
+    overflow: auto;
+
+    .menu{
+        border: none;
+        .ant-menu-item-selected{
+            font-weight: 600;
+        }
+    }
+
+    .leftMenu{
+        width: 15rem;
+        border-right: 1px solid @background-color-light;
+    }
+
+    .rightSide{
+        flex: 1 1;
+        min-height: 30rem;
+        padding: 0.8rem 3rem;
+    }
+}
+

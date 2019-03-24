@@ -14,3 +14,16 @@ export const isLogin: Selector<AccountState, boolean> = createSelector(
 export const isLoginRequesting = (state: AccountState) =>
     state.isLoginRequesting;
 export const getLoginError = (state: AccountState) => state.errorLogin;
+
+export const getAccountEmail = (state: AccountState) => {
+    if (state.info !== undefined) {
+        return state.info.email;
+    }
+    return '';
+};
+export const getAccountPhone = (state: AccountState) => {
+    if (state.info !== undefined) {
+        return state.info.phone;
+    }
+    return '';
+};

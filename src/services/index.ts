@@ -1,3 +1,5 @@
+import { AccountInfo } from '../stores/account/types';
+
 class ErrorAjax extends Error {
     public id: string;
     public message: string = '';
@@ -12,6 +14,7 @@ class ErrorAjax extends Error {
 
 export enum ErrorAjaxType {
     INVALID_PASSWORD = 'ajax_invalid_password',
+    NETWORK_ERROR = 'network error',
 }
 
 const asyncTimeout = (ms: number) => {
@@ -36,4 +39,36 @@ const fakeLogout = async () => {
         fakeSession = undefined;
     }
 };
-export { fakeLogin, fakeLogout, ErrorAjax };
+
+const fakeUpdateInfo = async (email: string, phone: string) => {
+    sessionStorage.setItem(
+        'account_info',
+        JSON.stringify({ email: email, phone: phone })
+    );
+    await asyncTimeout(1000);
+};
+
+const fakeGetInfo = async (): Promise<AccountInfo> => {
+    const temp = sessionStorage.getItem('account_info');
+    const ret = {
+        email: '',
+        phone: '',
+    };
+    if (temp !== null) {
+        try {
+            const { email, phone } = JSON.parse(temp);
+            if (email) {
+                ret.email = email;
+            }
+            if (phone) {
+                ret.phone = phone;
+            }
+        } catch (err) {
+            throw new ErrorAjax(ErrorAjaxType.NETWORK_ERROR);
+        }
+    }
+    await asyncTimeout(1000);
+    return ret;
+};
+
+export { fakeLogin, fakeLogout, fakeUpdateInfo, fakeGetInfo, ErrorAjax };

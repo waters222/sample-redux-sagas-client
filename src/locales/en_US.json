@@ -17,6 +17,17 @@
     "login_remember_me": "Remember me",
     "login_username_input_error_empty" : "Please input your username!",
     "login_password_input_error_empty" : "Please input your Password!",
+    "email_input_error_empty" : "Please input your email",
+    "phone_input_error_empty" : "Please input your phone number",
+    "email_input_error_invalid" : "invalid email format",
+    "phone_input_error_invalid" : "invalid phone number format",
 
-    "ajax_invalid_password": "user name & password not match!"
+    "ajax_invalid_password": "user name & password not match!",
+
+
+    "account_basic_setting": "Basic Setting",
+    "account_notification_setting": "Notification Setting",
+    "update-information": "Update Information",
+
+    "phone-number": "Phone Number"
 }
