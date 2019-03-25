@@ -1,14 +1,39 @@
 @import "../themes/main.less";
 
+.logo{
+    height: 4rem;
+    background: @layout-trigger-background;
+    padding-left: 1.3rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all .3s;
+
+    img{
+        margin: 1rem 0 1rem 0;
+        width: 2.2rem;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    span{
+        font-size: 1.2rem;
+        line-height: 1rem;
+        font-weight: 600;
+        color: @white;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0.3rem 0 0 0.6rem;
+    }
+}
 
 .user-name{
-    margin: 0 10px
+    margin: 0 1rem
 }
 
 .content{
-    margin: 24px 16px;
+    margin: 1.2rem 1rem;
     background: @body-background;
-    min-height: 280px;
+    min-height: 20rem;
 }
 
 

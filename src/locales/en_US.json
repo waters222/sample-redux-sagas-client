@@ -1,8 +1,14 @@
 {
     "lang_chinese": "Chinese",
     "lang_english": "English",
+    "dashboard": "Dashboard",
+    "account" : "Account",
     "account_info": "Account info",
     "logout": "Logout",
+    "avatar": "Avatar",
+    "avatar_upload": "Change Avatar",
+    "avatar_upload_invalid_format": "invalid avatar file format {format}",
+    "avatar_upload_too_large": "can no upload file size larger then 2MB",
 
     "client_title": "Demo Client",
     "client_desc": "Sample Redux Sagas Client",
@@ -17,6 +23,17 @@
     "login_remember_me": "Remember me",
     "login_username_input_error_empty" : "Please input your username!",
     "login_password_input_error_empty" : "Please input your Password!",
+    "email_input_error_empty" : "Please input your email",
+    "phone_input_error_empty" : "Please input your phone number",
+    "email_input_error_invalid" : "invalid email format",
+    "phone_input_error_invalid" : "invalid phone number format",
 
-    "ajax_invalid_password": "user name & password not match!"
+    "ajax_invalid_password": "user name & password not match!",
+
+
+    "account_basic_setting": "Basic Setting",
+    "account_notification_setting": "Notification Setting",
+    "update-information": "Update Information",
+
+    "phone-number": "Phone Number"
 }

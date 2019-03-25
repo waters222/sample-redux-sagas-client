@@ -5,18 +5,21 @@ import { connect } from 'react-redux';
 import { LanguageActions } from '../stores/language/actions';
 import { Dropdown, Icon, Layout, Menu } from 'antd';
 import './dashboard.less';
-import { Redirect, Route, Switch } from 'react-router';
-import Account from './account';
+import { Redirect, Route, RouteComponentProps, Switch } from 'react-router';
+import Account from './account/account';
 import NotFound from './not-found';
 import { isLogin } from '../stores/account/selectors';
 import { AccountActions } from '../stores/account/actions';
 import { FormattedMessage } from 'react-intl';
-import { ClickParam } from 'antd/lib/menu';
+import { ClickParam, SelectParam } from 'antd/lib/menu';
 import { Languages } from '../utils/language-helpers';
+import Home from './dashboard/home';
+import logo from '../assets/images/logo.svg';
+import SubMenu from 'antd/lib/menu/SubMenu';
 
 const { Header, Sider, Content } = Layout;
 
-interface Props {
+interface Props extends RouteComponentProps {
     readonly language: string;
     readonly userName: string | undefined;
     readonly bIsLogin: boolean;
@@ -52,8 +55,38 @@ class Dashboard extends React.Component<Props, States> {
         this.setState({ collapsed: !this.state.collapsed });
     };
 
+    public onClickLogo = () => {
+        this.props.history.push(`${this.props.match.url}`);
+    };
+
     public onClickLogout = () => {
         this.props.logout();
+    };
+
+    public onClickAccountInfo = () => {
+        this.props.history.push(`${this.props.match.url}/account/info`);
+    };
+
+    public getMenuKeysFromPath = (props: Props) => {
+        const path = props.location.pathname.replace(props.match.url, '');
+        const selectedKey = path.length === 0 ? '/' : path;
+        const temp = selectedKey.split('/');
+        if (temp.length > 2) {
+            return {
+                selectedKey: selectedKey,
+                openKey: `/${temp[1]}`,
+            };
+        } else {
+            return {
+                selectedKey: selectedKey,
+                openKey: '/',
+            };
+        }
+    };
+
+    public onSelect = (selection: SelectParam) => {
+        const url = selection.key === '/' ? '' : selection.key;
+        this.props.history.push(`${this.props.match.url}${url}`);
     };
 
     public langMenu = () => {
@@ -75,7 +108,7 @@ class Dashboard extends React.Component<Props, States> {
     public accountMenu = () => {
         return (
             <Menu className="dropdown-menu">
-                <Menu.Item>
+                <Menu.Item onClick={this.onClickAccountInfo}>
                     <Icon type="user" />
                     <FormattedMessage id="account_info" />
                 </Menu.Item>
@@ -92,6 +125,8 @@ class Dashboard extends React.Component<Props, States> {
         if (!this.props.bIsLogin) {
             return <Redirect to="/" />;
         }
+        const { match } = this.props;
+        const { selectedKey, openKey } = this.getMenuKeysFromPath(this.props);
         return (
             <Layout className="layout-top-layer">
                 <Sider
@@ -99,23 +134,38 @@ class Dashboard extends React.Component<Props, States> {
                     collapsible={true}
                     collapsed={this.state.collapsed}
                 >
+                    <div className="logo" onClick={this.onClickLogo}>
+                        <img src={logo} />
+                        <FormattedMessage id="client_title" />
+                    </div>
                     <Menu
                         theme="dark"
                         mode="inline"
-                        defaultSelectedKeys={['1']}
+                        onSelect={this.onSelect}
+                        defaultOpenKeys={[openKey]}
+                        selectedKeys={[selectedKey]}
                     >
-                        <Menu.Item key="1">
-                            <Icon type="user" />
-                            <span>nav 1</span>
+                        <Menu.Item key="/">
+                            <Icon type="dashboard" />
+                            <FormattedMessage id="dashboard" />
                         </Menu.Item>
-                        <Menu.Item key="2">
-                            <Icon type="video-camera" />
-                            <span>nav 2</span>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Icon type="upload" />
-                            <span>nav 3</span>
-                        </Menu.Item>
+                        <SubMenu
+                            title={
+                                <span>
+                                    <Icon type="user" />
+                                    <span>
+                                        <FormattedMessage id="account" />
+                                    </span>
+                                </span>
+                            }
+                            key="/account"
+                        >
+                            <Menu.Item key="/account/info">
+                                <span>
+                                    <FormattedMessage id="account_info" />
+                                </span>
+                            </Menu.Item>
+                        </SubMenu>
                     </Menu>
                 </Sider>
                 <Layout>
@@ -153,7 +203,15 @@ class Dashboard extends React.Component<Props, States> {
                     </Header>
                     <Content className="content">
                         <Switch>
-                            <Route path="/account" component={Account} />
+                            <Route
+                                exact={true}
+                                path={`${match.url}`}
+                                component={Home}
+                            />
+                            <Route
+                                path={`${match.url}/account/info`}
+                                component={Account}
+                            />
                             <Route component={NotFound} />
                         </Switch>
                     </Content>

@@ -24,6 +24,35 @@ export const AccountActions = {
 
     logoutFailed: (error: ErrorAjax) =>
         createAction(AccountActionType.LOGOUT_FAILED, error),
+
+    getAccountInfo: () => createAction(AccountActionType.GET_INFO),
+
+    getAccountInfoSuccessful: (email: string, phone: string) =>
+        createAction(AccountActionType.GET_INFO_SUCCESSFUL, {
+            email: email,
+            phone: phone,
+        }),
+
+    getInfoFailed: (error: ErrorAjax) =>
+        createAction(AccountActionType.GET_INFO_FAILED, {
+            error: error,
+        }),
+
+    updateInfo: (email: string, phone: string) =>
+        createAction(AccountActionType.UPDATE_INFO, {
+            email: email,
+            phone: phone,
+        }),
+
+    updateInfoSuccessful: (email: string, phone: string) =>
+        createAction(AccountActionType.UPDATE_INFO_SUCCESSFUL, {
+            email: email,
+            phone: phone,
+        }),
+    updateInfoFailed: (error: ErrorAjax) =>
+        createAction(AccountActionType.UPDATE_INFO_FAILED, {
+            error: error,
+        }),
 };
 
 export type AccountActions = ActionUnion<typeof AccountActions>;

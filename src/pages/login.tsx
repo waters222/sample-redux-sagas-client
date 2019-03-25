@@ -9,7 +9,6 @@ import {
     Input,
     Layout,
 } from 'antd';
-import { ChangeEvent } from 'react';
 import { AccountActions } from '../stores/account/actions';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
@@ -41,27 +40,27 @@ interface Props extends FormComponentProps, InjectedIntlProps {
     loginError: ErrorAjax | undefined;
 }
 
-interface States {
-    userName: string;
-    password: string;
-}
+// interface States {
+//     userName: string;
+//     password: string;
+// }
 
-class Login extends React.Component<Props, States> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            userName: '',
-            password: '',
-        };
-    }
-
-    public onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({ userName: e.target.value });
-    };
-
-    public onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({ password: e.target.value });
-    };
+class Login extends React.Component<Props> {
+    // constructor(props: Props) {
+    //     super(props);
+    //     this.state = {
+    //         userName: '',
+    //         password: '',
+    //     };
+    // }
+    //
+    // public onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => {
+    //     this.setState({ userName: e.target.value });
+    // };
+    //
+    // public onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    //     this.setState({ password: e.target.value });
+    // };
 
     public onChangeRememberMe = (e: CheckboxChangeEvent) => {
         console.log(`remember me: ${e.target.checked}`);
@@ -167,7 +166,6 @@ class Login extends React.Component<Props, States> {
                                                         }}
                                                     />
                                                 }
-                                                onChange={this.onChangeUserName}
                                             />
                                         )}
                                     </Form.Item>
@@ -203,7 +201,6 @@ class Login extends React.Component<Props, States> {
                                                         }}
                                                     />
                                                 }
-                                                onChange={this.onChangePassword}
                                             />
                                         )}
                                     </Form.Item>
