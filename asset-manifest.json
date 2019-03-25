@@ -1,15 +1,17 @@
 {
-  "main.css": "/sample-redux-sagas-client/static/css/main.c9baac72.chunk.css",
-  "main.js": "/sample-redux-sagas-client/static/js/main.cd3f18f1.chunk.js",
-  "main.js.map": "/sample-redux-sagas-client/static/js/main.cd3f18f1.chunk.js.map",
+  "main.css": "/sample-redux-sagas-client/static/css/main.6215478d.chunk.css",
+  "main.js": "/sample-redux-sagas-client/static/js/main.2d18f1b8.chunk.js",
+  "main.js.map": "/sample-redux-sagas-client/static/js/main.2d18f1b8.chunk.js.map",
   "runtime~main.js": "/sample-redux-sagas-client/static/js/runtime~main.027d45e8.js",
   "runtime~main.js.map": "/sample-redux-sagas-client/static/js/runtime~main.027d45e8.js.map",
   "static/css/2.5f2e7703.chunk.css": "/sample-redux-sagas-client/static/css/2.5f2e7703.chunk.css",
-  "static/js/2.8b692940.chunk.js": "/sample-redux-sagas-client/static/js/2.8b692940.chunk.js",
-  "static/js/2.8b692940.chunk.js.map": "/sample-redux-sagas-client/static/js/2.8b692940.chunk.js.map",
+  "static/js/2.04125a02.chunk.js": "/sample-redux-sagas-client/static/js/2.04125a02.chunk.js",
+  "static/js/2.04125a02.chunk.js.map": "/sample-redux-sagas-client/static/js/2.04125a02.chunk.js.map",
   "index.html": "/sample-redux-sagas-client/index.html",
-  "precache-manifest.3777cede4ac72544255fc3784873cd86.js": "/sample-redux-sagas-client/precache-manifest.3777cede4ac72544255fc3784873cd86.js",
+  "precache-manifest.525cb1cd7f838cf53d2e5ee990ca2e72.js": "/sample-redux-sagas-client/precache-manifest.525cb1cd7f838cf53d2e5ee990ca2e72.js",
   "service-worker.js": "/sample-redux-sagas-client/service-worker.js",
   "static/css/2.5f2e7703.chunk.css.map": "/sample-redux-sagas-client/static/css/2.5f2e7703.chunk.css.map",
-  "static/css/main.c9baac72.chunk.css.map": "/sample-redux-sagas-client/static/css/main.c9baac72.chunk.css.map"
+  "static/css/main.6215478d.chunk.css.map": "/sample-redux-sagas-client/static/css/main.6215478d.chunk.css.map",
+  "static/media/avatar_0.svg": "/sample-redux-sagas-client/static/media/avatar_0.80988518.svg",
+  "static/media/logo.svg": "/sample-redux-sagas-client/static/media/logo.8e26f220.svg"
 }
