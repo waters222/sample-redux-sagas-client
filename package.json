@@ -33,7 +33,6 @@
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
   },
-
   "devDependencies": {
     "@types/immutability-helper": "^2.6.3",
     "@types/jest": "^23.3.10",
@@ -53,6 +52,7 @@
     "prettier": "^1.16.4",
     "react-app-rewired": "^2.1.1",
     "redux-devtools-extension": "^2.13.6",
+    "redux-saga-test-plan": "^3.7.0",
     "style-loader": "^0.23.1",
     "ts-import-plugin": "^1.5.5",
     "ts-loader": "^5.3.3",
