@@ -18,7 +18,7 @@ const name = 'fake_name';
 const password = 'fake_password';
 const session = 'fake_session';
 
-test('test login saga', async () => {
+test('test login saga successful', async () => {
     return expectSaga(accountSaga)
         .provide([[matchers.call.fn(fakeLogin), session]])
         .put(AccountActions.loginSuccessful(name, session))
@@ -35,7 +35,7 @@ test('test login saga failed', async () => {
         .run();
 });
 
-test('test login saga with reducer', async () => {
+test('test login saga successful with reducer', async () => {
     return expectSaga(accountSaga)
         .provide([[matchers.call.fn(fakeLogin), session]])
         .withReducer(accountReducer)
@@ -49,7 +49,20 @@ test('test login saga with reducer', async () => {
         .run();
 });
 
-test('test logout saga', async () => {
+test('test login saga failed with reducer', async () => {
+    const failedError = new ErrorAjax(ErrorAjaxType.INVALID_PASSWORD);
+    return expectSaga(accountSaga)
+        .provide([[matchers.call.fn(fakeLogin), throwError(failedError)]])
+        .withReducer(accountReducer)
+        .hasFinalState({
+            ...accountInitialState,
+            errorLogin: failedError,
+        })
+        .dispatch(AccountActions.login(name, password))
+        .run();
+});
+
+test('test logout saga successful', async () => {
     return expectSaga(accountSaga)
         .provide([[matchers.call.fn(fakeLogout), undefined]])
         .put(AccountActions.logoutSuccessful())
