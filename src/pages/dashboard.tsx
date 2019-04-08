@@ -16,6 +16,7 @@ import { Languages } from '../utils/language-helpers';
 import Home from './dashboard/home';
 import logo from '../assets/images/logo.svg';
 import SubMenu from 'antd/lib/menu/SubMenu';
+import StepForm from './step-form/step-form';
 
 const { Header, Sider, Content } = Layout;
 
@@ -149,6 +150,10 @@ class Dashboard extends React.Component<Props, States> {
                             <Icon type="dashboard" />
                             <FormattedMessage id="dashboard" />
                         </Menu.Item>
+                        <Menu.Item key="/step-form/start">
+                            <Icon type="form" />
+                            <FormattedMessage id="step-form" />
+                        </Menu.Item>
                         <SubMenu
                             title={
                                 <span>
@@ -208,6 +213,8 @@ class Dashboard extends React.Component<Props, States> {
                                 path={`${match.url}`}
                                 component={Home}
                             />
+                            <Route  path={`${match.url}/step-form/start`}
+                                    component={StepForm}/>
                             <Route
                                 path={`${match.url}/account/info`}
                                 component={Account}
