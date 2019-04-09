@@ -71,4 +71,23 @@ const fakeGetInfo = async (): Promise<AccountInfo> => {
     return ret;
 };
 
-export { fakeLogin, fakeLogout, fakeUpdateInfo, fakeGetInfo, ErrorAjax };
+let fakeAddtoDoIfSucc = false;
+const fakeAddTodo = async () => {
+    if (fakeAddtoDoIfSucc) {
+        fakeAddtoDoIfSucc = !ErrorAjaxType.NETWORK_ERROR;
+        await asyncTimeout(1000);
+        return true;
+    } else {
+        await asyncTimeout(300);
+        fakeAddtoDoIfSucc = !ErrorAjaxType.NETWORK_ERROR;
+        throw new ErrorAjax(ErrorAjaxType.NETWORK_ERROR);
+    }
+};
+export {
+    fakeLogin,
+    fakeLogout,
+    fakeUpdateInfo,
+    fakeGetInfo,
+    fakeAddTodo,
+    ErrorAjax,
+};

@@ -213,8 +213,10 @@ class Dashboard extends React.Component<Props, States> {
                                 path={`${match.url}`}
                                 component={Home}
                             />
-                            <Route  path={`${match.url}/step-form/start`}
-                                    component={StepForm}/>
+                            <Route
+                                path={`${match.url}/step-form/start`}
+                                component={StepForm}
+                            />
                             <Route
                                 path={`${match.url}/account/info`}
                                 component={Account}

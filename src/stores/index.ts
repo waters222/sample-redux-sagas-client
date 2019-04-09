@@ -6,10 +6,13 @@ import { History } from 'history';
 import { LanguageState } from './language/types';
 import { accountReducer } from './account/reducers';
 import { AccountState } from './account/types';
+import { TodoState } from './todo/types';
+import { todoReducer } from './todo/reducers';
 
 export interface ApplicationState {
     account: AccountState;
     language: LanguageState;
+    todo: TodoState;
     router: RouterState;
 }
 
@@ -17,5 +20,6 @@ export const createRootReducer = (history: History) =>
     combineReducers<ApplicationState>({
         account: accountReducer,
         language: lanReducer,
+        todo: todoReducer,
         router: connectRouter(history),
     });
