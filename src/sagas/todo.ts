@@ -9,7 +9,6 @@ function* todo() {
 
         const action = yield take([
             TodoActionType.SELECT_DATE,
-            TodoActionType.GO_BACK,
             TodoActionType.CANCEL,
         ]);
         if (action.type === TodoActionType.CANCEL) {
