@@ -1,8 +1,9 @@
 import { call, spawn } from 'redux-saga/effects';
 import accountSaga from './account';
+import todoSaga from './todo';
 
 export default function* rootSaga() {
-    const sagas = [accountSaga];
+    const sagas = [accountSaga, todoSaga];
     for (const saga of sagas) {
         yield spawn(function*() {
             while (true) {

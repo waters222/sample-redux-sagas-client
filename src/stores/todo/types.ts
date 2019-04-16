@@ -1,4 +1,5 @@
 import { ErrorAjax } from '../../services';
+import moment from 'moment';
 
 export enum TodoActionType {
     START = '@@todo/START',
@@ -16,8 +17,8 @@ export enum TodoActionType {
 
 export interface TodoState {
     readonly title: string;
-    readonly start: Date | undefined;
-    readonly end: Date | undefined;
+    readonly start: moment.Moment | undefined;
+    readonly end: moment.Moment | undefined;
     readonly step: number;
     readonly isRequesting: boolean;
     readonly error: ErrorAjax | undefined;

@@ -12,6 +12,7 @@
     "es-cookie": "^1.2.0",
     "history": "^4.7.2",
     "immutability-helper": "^3.0.0",
+    "moment": "^2.24.0",
     "prop-types": "^15.5.4",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

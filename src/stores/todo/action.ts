@@ -1,32 +1,28 @@
 import { TodoActionType } from './types';
 import { ActionUnion, createAction } from '../action-helper';
+import moment from 'moment';
 
 export const TodoActions = {
-    start: (title: string) => {
+    start: (title: string) =>
         createAction(TodoActionType.START, {
             title: title,
-        });
-    },
-    selectDate: (start: Date, end: Date) => {
+        }),
+
+    selectDate: (start: moment.Moment, end: moment.Moment) =>
         createAction(TodoActionType.SET_DATE, {
             start: start,
             end: end,
-        });
-    },
-    setTitle: (title: string) => {
+        }),
+    setTitle: (title: string) =>
         createAction(TodoActionType.SET_TITLE, {
             title: title,
-        });
-    },
-    setDate: (start: Date, end: Date) => {
+        }),
+    setDate: (start: moment.Moment, end: moment.Moment) =>
         createAction(TodoActionType.SET_DATE, {
             start: start,
             end: end,
-        });
-    },
-    submit: () => {
-        createAction(TodoActionType.SUBMIT);
-    },
+        }),
+    submit: () => createAction(TodoActionType.SUBMIT),
     addTodoSucc: () => createAction(TodoActionType.ADD_TODO_SUCC),
     addTodoFail: () => createAction(TodoActionType.ADD_TODO_FAIL),
 

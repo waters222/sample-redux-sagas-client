@@ -38,5 +38,16 @@
 
     "phone-number": "电话号码",
 
-    "step-form": "分步表单"
+    "step-form": "分步表单",
+
+    "todo_title": "输入标题",
+    "todo_time": "设置时间",
+    "todo_confirm": "确认",
+    "todo_submit_title": "下一步",
+
+    "todo_tile_empty": "标题不能为空",
+    "cancel": "取消",
+    "todo_start": "开始时间",
+    "todo_end": "结束时间",
+    "confirm": "确认"
 }

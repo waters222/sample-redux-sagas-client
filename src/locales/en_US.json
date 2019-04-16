@@ -37,5 +37,16 @@
 
     "phone-number": "Phone Number",
 
-    "step-form": "Step Form"
+    "step-form": "Step Form",
+
+    "todo_title": "Enter Todo Title",
+    "todo_time": "Set Time",
+    "todo_confirm": "Confirm",
+    "todo_submit_title": "Next",
+
+    "todo_tile_empty": "todo title can not empty",
+    "cancel": "Cancel",
+    "todo_start": "Start Time",
+    "todo_end": "End Time",
+    "confirm": "Confirm"
 }

@@ -14,15 +14,17 @@ const initialState: TodoState = {
 const reducer: Reducer<TodoState> = (state = initialState, action) => {
     switch (action.type) {
         case TodoActionType.SET_TITLE:
+            const { title } = action.payload;
             return update(state, {
-                title: { $set: action.title },
+                title: { $set: title },
                 step: { $set: 1 },
             });
 
         case TodoActionType.SET_DATE:
+            const { start, end } = action.payload;
             return update(state, {
-                start: { $set: action.start },
-                end: { $set: action.end },
+                start: { $set: start },
+                end: { $set: end },
                 step: { $set: 2 },
             });
 

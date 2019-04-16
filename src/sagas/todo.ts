@@ -1,16 +1,18 @@
-import { all, call, take } from 'redux-saga/effects';
+import { all, call, put, take } from 'redux-saga/effects';
 import { TodoActionType } from '../stores/todo/types';
 import { TodoActions } from '../stores/todo/action';
 
 function* todo() {
     while (true) {
-        const { title } = yield take(TodoActionType.START);
-        yield call(TodoActions.setTitle, title);
-
-        const action = yield take([
+        let action = yield take(TodoActionType.START);
+        const { title } = action.payload;
+        console.log(`saga title: ${title}`);
+        yield put(TodoActions.setTitle(title));
+        action = yield take([
             TodoActionType.SELECT_DATE,
             TodoActionType.CANCEL,
         ]);
+        console.log(`action: ${action}`);
         if (action.type === TodoActionType.CANCEL) {
             continue;
         }
