@@ -7,7 +7,7 @@
     "@ant-design/icons": "~1.1.0",
     "@ant-design/icons-react": "^1.1.2",
     "antd": "^3.10.9",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "connected-react-router": "^5.0.1",
     "es-cookie": "^1.2.0",
     "history": "^4.7.2",
